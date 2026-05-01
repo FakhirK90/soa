@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mujhe Maaf Kar Do 🥺</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            background: #000;
+        }
+
+        /* CANVAS PARTICLES */
+        #canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* PAGES */
+        .page {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 1rem 5.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease, transform 1s ease;
+            transform: scale(1.06);
+            overflow-x: hidden;
+            overflow-y: auto;
+            z-index: 1;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .page.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: scale(1);
+        }
+
+        .page.out {
+            opacity: 0;
+            transform: scale(0.94);
+        }
+
+        /* BACKGROUNDS */
+        #p1 {
+            background: radial-gradient(ellipse at 30% 20%, #6b21a8 0%, #1e0936 40%, #000 100%);
+        }
+
+        #p2 {
+            background: radial-gradient(ellipse at 70% 80%, #0e4d91 0%, #020b24 50%, #000 100%);
+        }
+
+        #p3 {
+            background: radial-gradient(ellipse at 50% 50%, #7c2d12 0%, #1c0a00 50%, #000 100%);
+        }
+
+        #p4 {
+            background: linear-gradient(160deg, #1a0000 0%, #8b0000 40%, #1a0000 100%);
+        }
+
+        #p5 {
+            background: radial-gradient(ellipse at center, #1a1200 0%, #3d2e00 30%, #000 100%);
+        }
+
+        /* PAGE 1 card — purple neon */
+        #p1 .card {
+            border-color: rgba(168, 85, 247, 0.4);
+            box-shadow: 0 0 60px rgba(168, 85, 247, 0.25), 0 30px 80px rgba(0, 0, 0, 0.7);
+        }
+
+        #p1 .title {
+            font-family: 'Pacifico', cursive;
+            letter-spacing: 1px;
+        }
+
+        #p1 .box {
+            background: rgba(168, 85, 247, 0.15);
+            border: 1.5px solid rgba(168, 85, 247, 0.5);
+        }
+
+        #p1 .li {
+            border-left-color: #a855f7;
+        }
+
+        /* PAGE 2 card — cyan ocean */
+        #p2 .card {
+            border-color: rgba(6, 182, 212, 0.4);
+            box-shadow: 0 0 60px rgba(6, 182, 212, 0.2), 0 30px 80px rgba(0, 0, 0, 0.7);
+        }
+
+        #p2 .title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        #p2 .box {
+            background: rgba(6, 182, 212, 0.12);
+            border: 1.5px solid rgba(6, 182, 212, 0.45);
+        }
+
+        #p2 .li {
+            border-left-color: #06b6d4;
+        }
+
+        /* PAGE 3 card — sunset orange */
+        #p3 .card {
+            border-color: rgba(249, 115, 22, 0.4);
+            box-shadow: 0 0 60px rgba(249, 115, 22, 0.2), 0 30px 80px rgba(0, 0, 0, 0.7);
+        }
+
+        #p3 .title {
+            font-family: 'Pacifico', cursive;
+        }
+
+        #p3 .box {
+            background: rgba(249, 115, 22, 0.12);
+            border: 1.5px solid rgba(249, 115, 22, 0.45);
+        }
+
+        #p3 .li {
+            border-left-color: #f97316;
+        }
+
+        /* CARD */
+        .card {
+            position: relative;
+            z-index: 5;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            border-radius: 36px;
+            padding: 2.2rem 2rem;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+        }
+
+        /* FADE IN SEQUENCE */
+        .a {
+            opacity: 0;
+        }
+
+        .page.active .a {
+            animation: fadeUp 0.75s ease forwards;
+        }
+
+        .page.active .a:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+
+        .page.active .a:nth-child(2) {
+            animation-delay: 0.22s;
+        }
+
+        .page.active .a:nth-child(3) {
+            animation-delay: 0.40s;
+        }
+
+        .page.active .a:nth-child(4) {
+            animation-delay: 0.58s;
+        }
+
+        .page.active .a:nth-child(5) {
+            animation-delay: 0.76s;
+        }
+
+        .page.active .a:nth-child(6) {
+            animation-delay: 0.94s;
+        }
+
+        .page.active .a:nth-child(7) {
+            animation-delay: 1.1s;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(28px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* CHARACTER */
+        .char {
+            font-size: 7rem;
+            line-height: 1;
+            display: block;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.25));
+        }
+
+        .anim-float {
+            animation: floatC 2.5s ease-in-out infinite;
+        }
+
+        .anim-cry {
+            animation: cryC 1s ease-in-out infinite;
+        }
+
+        .anim-beg {
+            animation: begC 0.9s ease-in-out infinite;
+        }
+
+        @keyframes floatC {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-18px);
+            }
+        }
+
+        @keyframes cryC {
+
+            0%,
+            100% {
+                transform: rotate(-4deg)scale(1);
+            }
+
+            50% {
+                transform: rotate(4deg)scale(1.08);
+            }
+        }
+
+        @keyframes begC {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            30%,
+            70% {
+                transform: translateY(-12px)rotate(-5deg);
+            }
+
+            50% {
+                transform: translateY(-12px)rotate(5deg);
+            }
+        }
+
+        /* TITLE */
+        .title {
+            font-family: 'Pacifico', cursive;
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            color: #fff;
+            margin: 0.5rem 0 0.2rem;
+            text-shadow: 0 0 30px currentColor, 0 2px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        .p1c {
+            color: #c084fc;
+        }
+
+        .p2c {
+            color: #22d3ee;
+        }
+
+        .p3c {
+            color: #fb923c;
+        }
+
+        .p4c {
+            color: #f87171;
+        }
+
+        .p5c {
+            color: #fbbf24;
+        }
+
+        .sub {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.65);
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        /* MSG */
+        .msg {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.88);
+            line-height: 2;
+            margin: 0.6rem 0;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .msg b {
+            color: #fff;
+        }
+
+        /* BOX */
+        .box {
+            border-radius: 18px;
+            padding: 1rem 1.4rem;
+            margin: 0.8rem 0;
+            font-size: 0.98rem;
+            color: #fff;
+            line-height: 2;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .b1 {
+            background: rgba(217, 70, 239, 0.18);
+            border: 1.5px solid rgba(217, 70, 239, 0.4);
+        }
+
+        .b2 {
+            background: rgba(56, 189, 248, 0.18);
+            border: 1.5px solid rgba(56, 189, 248, 0.4);
+        }
+
+        .b3 {
+            background: rgba(74, 222, 128, 0.18);
+            border: 1.5px solid rgba(74, 222, 128, 0.4);
+        }
+
+        .b4 {
+            background: rgba(248, 113, 113, 0.18);
+            border: 1.5px solid rgba(248, 113, 113, 0.4);
+        }
+
+        .b5 {
+            background: rgba(251, 191, 36, 0.18);
+            border: 1.5px solid rgba(251, 191, 36, 0.4);
+        }
+
+        /* LIST */
+        .li {
+            background: rgba(255, 255, 255, 0.09);
+            border-radius: 14px;
+            padding: 0.75rem 1.2rem;
+            margin: 0.4rem 0;
+            text-align: left;
+            color: #fff;
+            font-size: 0.97rem;
+            border-left: 4px solid rgba(255, 255, 255, 0.35);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        }
+
+        /* EMOJIS */
+        .er {
+            font-size: 2rem;
+            letter-spacing: 5px;
+            margin: 0.6rem 0;
+        }
+
+        .eb {
+            display: inline-block;
+            animation: eb 1.5s ease-in-out infinite;
+        }
+
+        .es {
+            display: inline-block;
+            animation: es 0.8s ease-in-out infinite;
+        }
+
+        .ep {
+            display: inline-block;
+            animation: ep 1.2s ease-in-out infinite;
+        }
+
+        .eR {
+            display: inline-block;
+            animation: eR 2s linear infinite;
+        }
+
+        @keyframes eb {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-11px);
+            }
+        }
+
+        @keyframes es {
+
+            0%,
+            100% {
+                transform: rotate(0);
+            }
+
+            25% {
+                transform: rotate(-12deg);
+            }
+
+            75% {
+                transform: rotate(12deg);
+            }
+        }
+
+        @keyframes ep {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.3);
+            }
+        }
+
+        @keyframes eR {
+            from {
+                transform: rotate(0);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* NAV BOTTOM */
+        .nav {
+            position: absolute;
+            bottom: 1.8rem;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.2rem;
+            z-index: 10;
+        }
+
+        .nbtn {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(12px);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.92rem;
+            padding: 0.62rem 1.8rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nbtn:hover {
+            background: rgba(255, 255, 255, 0.22);
+            transform: translateY(-3px)scale(1.05);
+        }
+
+        .nbtn.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* DOTS */
+        .dots {
+            position: absolute;
+            bottom: 5rem;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 0.55rem;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.28);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .dot.on {
+            background: #fff;
+            width: 22px;
+            border-radius: 4px;
+        }
+
+        /* MUSIC BTN */
+        .mbtn {
+            position: fixed;
+            top: 1.2rem;
+            right: 1.2rem;
+            z-index: 9999;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(12px);
+            border-radius: 50%;
+            width: 46px;
+            height: 46px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .mbtn:hover {
+            transform: scale(1.15);
+        }
+
+        /* FLOATERS */
+        .fl-wrap {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .fl {
+            position: absolute;
+            opacity: 0;
+            animation: flUp linear infinite;
+        }
+
+        @keyframes flUp {
+            0% {
+                bottom: -8%;
+                opacity: 0;
+            }
+
+            15% {
+                opacity: 0.8;
+            }
+
+            85% {
+                opacity: 0.8;
+            }
+
+            100% {
+                bottom: 108%;
+                opacity: 0;
+                transform: translateX(25px);
+            }
+        }
+
+        /* ═══════ FINAL PAGE SPECIAL ═══════ */
+        #p5 .card {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(251, 191, 36, 0.3);
+        }
+
+        .ily-wrap {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .ily {
+            font-family: 'Pacifico', cursive;
+            font-size: clamp(2.8rem, 10vw, 6rem);
+            background: linear-gradient(135deg, #fbbf24, #f59e0b, #fcd34d, #fbbf24);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: ilyGlow 2s ease-in-out infinite, bgMove 3s ease infinite;
+            filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.6));
+            display: block;
+            line-height: 1.2;
+        }
+
+        @keyframes bgMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes ilyGlow {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.5));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 40px rgba(251, 191, 36, 0.9))drop-shadow(0 0 80px rgba(251, 191, 36, 0.4));
+            }
+        }
+
+        @keyframes photoFloat {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-8px) scale(1.03);
+            }
+        }
+
+        .sorry-big {
+            font-family: 'Pacifico', cursive;
+            font-size: clamp(1.6rem, 5vw, 3rem);
+            color: #f87171;
+            text-shadow: 0 0 25px rgba(248, 113, 113, 0.7);
+            animation: sorryPulse 1.5s ease-in-out infinite;
+            display: block;
+            margin-top: 0.4rem;
+        }
+
+        @keyframes sorryPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.06);
+            }
+        }
+
+        .heart-big {
+            font-size: 4rem;
+            display: inline-block;
+            animation: heartBeat 0.8s ease-in-out infinite;
+        }
+
+        @keyframes heartBeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            14% {
+                transform: scale(1.25);
+            }
+
+            28% {
+                transform: scale(1);
+            }
+
+            42% {
+                transform: scale(1.15);
+            }
+
+            70% {
+                transform: scale(1);
+            }
+        }
+
+        /* STAR RAIN */
+        .stars-wrap {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 3;
+        }
+
+        .st {
+            position: absolute;
+            top: -30px;
+            animation: stFall linear infinite;
+        }
+
+        @keyframes stFall {
+            to {
+                transform: translateY(110vh)rotate(360deg);
+            }
+        }
+
+        @media(max-width:480px) {
+            .char {
+                font-size: 4rem;
+            }
+
+            .card {
+                padding: 1.4rem 1rem;
+                border-radius: 24px;
+            }
+
+            .ily {
+                font-size: 2rem;
+            }
+
+            .sorry-big {
+                font-size: 1.2rem;
+            }
+
+            .er {
+                font-size: 1.5rem;
+                letter-spacing: 3px;
+            }
+
+            .msg {
+                font-size: 0.9rem;
+                line-height: 1.8;
+            }
+
+            .box {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+                line-height: 1.8;
+            }
+
+            .nav {
+                bottom: 1rem;
+                gap: 0.8rem;
+            }
+
+            .nbtn {
+                padding: 0.5rem 1.3rem;
+                font-size: 0.82rem;
+            }
+
+            .dots {
+                bottom: 3.8rem;
+            }
+
+            .title {
+                font-size: clamp(1.3rem, 5vw, 2rem);
+            }
+
+            .li {
+                font-size: 0.88rem;
+                padding: 0.6rem 1rem;
+            }
+
+            .heart-big {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media(max-width:380px) {
+            .ily {
+                font-size: 1.7rem;
+            }
+
+            .sorry-big {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <button class="mbtn" id="mbtn" onclick="toggleMusic()">🎵</button>
+    <audio id="bgm" loop src="song.mp3"></audio>
+
+    <!-- ══ PAGE 1 — FULLSCREEN DRAMATIC SORRY ══ -->
+    <div class="page active" id="p1">
+        <div class="fl-wrap" id="f1"></div>
+        <!-- BIG DRAMATIC FULLSCREEN — NO CARD -->
+        <div style="text-align:center;z-index:5;position:relative">
+            <div class="a" style="text-align:center">
+                <img src="milk-and-mocha.gif"
+                    style="width:clamp(120px,35vw,180px);height:auto;filter:drop-shadow(0 0 40px #a855f7);border-radius:20px">
+            </div>
+
+            <div class="a" style="font-size:3rem;letter-spacing:10px;margin:0.5rem 0">
+                <!-- APNE EMOJIS YAHAN DALO -->
+                <span class="es">😭</span><span class="ep">💔</span><span class="es">🙏</span><span
+                    class="ep">💔</span><span class="es">😭</span>
+            </div>
+
+            <h1 class="a"
+                style="font-family:'Pacifico',cursive;font-size:clamp(2.5rem,8vw,5rem);color:#c084fc;text-shadow:0 0 40px #a855f7,0 0 80px #7c3aed,0 4px 12px rgba(0,0,0,0.8);line-height:1.2">
+                Mujhe Maaf<br>Kar Do!
+            </h1>
+
+            <p class="a"
+                style="font-size:clamp(1rem,3vw,1.4rem);color:rgba(255,255,255,0.7);margin:0.8rem 0 1.5rem;font-weight:300">
+                Main tumhare saamne haath jorta hoon... 🥺
+            </p>
+
+            <div class="a"
+                style="display:inline-block;background:rgba(168,85,247,0.12);backdrop-filter:blur(20px);border:1px solid rgba(168,85,247,0.4);border-radius:24px;padding:1.5rem 2rem;max-width:500px;text-align:center">
+                <p
+                    style="font-size:clamp(1rem,2.5vw,1.2rem);color:rgba(255,255,255,0.9);line-height:2.2;text-shadow:0 2px 6px rgba(0,0,0,0.6)">
+                    <b style="color:#c084fc">Main bahut bura hoon...</b> 😔<br>
+                    Tumne trust kiya, maine tod diya 💔<br>
+                    Ye dil todna nahi chahta tha kabhi<br>
+                    <b style="font-size:1.2em;color:#e9d5ff">PLEASE MAAF KAR DO! 🙏</b>
+                </p>
+            </div>
+
+            <div class="a"
+                style="margin-top:1.2rem;font-size:clamp(0.95rem,2vw,1.1rem);color:rgba(255,255,255,0.8);line-height:2.2">
+                <span class="eb">😢</span> Tumhare aansu dekh ke rona aata hai<br>
+                <span class="es">💔</span> Tumhari narazgi se neend nahi aati<br>
+                <span class="ep" style="font-size:1.5em">🙏</span> <b style="color:#fff">I AM SO DEEPLY SORRY!</b>
+            </div>
+
+            <div class="a" style="font-size:2.5rem;margin-top:0.8rem;letter-spacing:8px">
+                <span class="ep">💜</span><span class="eb">🙏</span><span class="ep">💜</span><span
+                    class="eb">🙏</span><span class="ep">💜</span>
+            </div>
+        </div>
+
+        <div class="dots"></div>
+        <div class="nav">
+            <button class="nbtn hide">◀ Peeche</button>
+            <button class="nbtn"
+                style="background:linear-gradient(135deg,rgba(168,85,247,0.4),rgba(124,58,237,0.4));border-color:rgba(168,85,247,0.7);box-shadow:0 0 20px rgba(168,85,247,0.4)"
+                onclick="goTo(2)">Aage Chalo ▶</button>
+        </div>
+    </div>
+
+    <!-- ══ PAGE 2 — SPLIT LAYOUT OCEAN ══ -->
+    <div class="page" id="p2">
+        <div class="fl-wrap" id="f2"></div>
+
+        <!-- TWO COLUMN SPLIT DESIGN -->
+        <div class="a"
+            style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:2rem;max-width:900px;width:100%;z-index:5;position:relative">
+
+            <!-- LEFT SIDE — Big Character -->
+            <div style="flex:1;min-width:200px;text-align:center">
+                <div style="filter:drop-shadow(0 0 35px #06b6d4)">
+                    <img src="08009df64282a22dee0b712838957a2e.gif"
+                        style="width:clamp(130px,40vw,200px);height:auto;border-radius:20px">
+                </div>
+                <div style="font-size:2.8rem;letter-spacing:8px;margin-top:0.5rem">
+                    <!-- APNE EMOJIS YAHAN DALO -->
+                    <span class="ep">💙</span><span class="eb">🌊</span><span class="ep">💙</span>
+                </div>
+                <div
+                    style="margin-top:0.8rem;font-size:clamp(1.2rem,4vw,2rem);font-family:'Pacifico',cursive;color:#22d3ee;text-shadow:0 0 20px #06b6d4">
+                    I'm Sorry 💙
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE — Messages -->
+            <div style="flex:1;min-width:280px">
+                <h1 class="a"
+                    style="font-family:'Poppins',sans-serif;font-weight:900;font-size:clamp(1.6rem,4vw,2.5rem);color:#22d3ee;letter-spacing:-1px;text-shadow:0 0 30px #06b6d4,0 0 60px #0284c7;margin-bottom:0.6rem">
+                    DIL KI SACHCHI BAAT
+                </h1>
+
+                <div class="a"
+                    style="background:rgba(6,182,212,0.1);backdrop-filter:blur(16px);border:1px solid rgba(6,182,212,0.35);border-radius:20px;padding:1.5rem;margin-bottom:1rem">
+                    <p
+                        style="color:rgba(255,255,255,0.9);line-height:2.2;font-size:1rem;text-shadow:0 1px 4px rgba(0,0,0,0.6)">
+                        Tumse ladna nahi chahta tha kabhi 💙<br>
+                        <b>Jo hua — woh bilkul galat tha</b><br>
+                        Mera dil hamesha <b style="color:#22d3ee">SIRF TUMHARA</b> hai 🌊<br>
+                        Bina tumhare sab adhoora hai!
+                    </p>
+                </div>
+
+                <div class="a"
+                    style="background:rgba(6,182,212,0.08);backdrop-filter:blur(16px);border:1px solid rgba(6,182,212,0.25);border-radius:20px;padding:1.5rem">
+                    <p style="color:rgba(255,255,255,0.85);line-height:2.2;font-size:1rem">
+                        <span class="ep">💙</span> Tumhari smile pe sab bhool jata hoon<br>
+                        <span class="eb">🌊</span> Tumhara naam soch ke dil ko chain milta hai<br>
+                        <span class="es">😔</span> <b style="color:#22d3ee">I miss you so much!</b>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="dots"></div>
+        <div class="nav">
+            <button class="nbtn"
+                style="background:linear-gradient(135deg,rgba(6,182,212,0.3),rgba(2,132,199,0.3));border-color:rgba(6,182,212,0.6);box-shadow:0 0 20px rgba(6,182,212,0.3)"
+                onclick="goTo(1)">◀ Peeche</button>
+            <button class="nbtn"
+                style="background:linear-gradient(135deg,rgba(6,182,212,0.3),rgba(2,132,199,0.3));border-color:rgba(6,182,212,0.6);box-shadow:0 0 20px rgba(6,182,212,0.3)"
+                onclick="goTo(3)">Aage Chalo ▶</button>
+        </div>
+    </div>
+
+    <!-- ══ PAGE 3 — TIMELINE STYLE SUNSET ══ -->
+    <div class="page" id="p3">
+        <div class="fl-wrap" id="f3"></div>
+
+        <div style="z-index:5;position:relative;text-align:center;max-width:650px;width:100%">
+            <div class="a" style="filter:drop-shadow(0 0 25px #f97316)">
+                <img src="82d59183c9cf253acb80eb269a2e5970.gif"
+                    style="width:clamp(110px,30vw,160px);height:auto;border-radius:20px">
+            </div>
+            <div class="a" style="font-size:2.5rem;letter-spacing:8px;margin:0.3rem 0">
+                <!-- APNE EMOJIS YAHAN DALO -->
+                <span class="eR">🌹</span><span class="eb">🔥</span><span class="ep">💫</span><span
+                    class="eb">🔥</span><span class="eR">🌹</span>
+            </div>
+            <h1 class="a"
+                style="font-family:'Pacifico',cursive;font-size:clamp(1.6rem,5vw,2.8rem);color:#fb923c;text-shadow:0 0 30px #f97316,0 0 60px #ea580c;margin-bottom:0.4rem">
+                Kyun Chahta Hoon Tumhe</h1>
+            <p class="a" style="color:rgba(251,146,60,0.75);font-size:0.95rem;margin-bottom:1rem">Wajahaat jinhe lafzon
+                mein keh nahi sakta 🌹</p>
+
+            <!-- TIMELINE -->
+            <div class="a"
+                style="position:relative;padding-left:2rem;border-left:2px solid rgba(249,115,22,0.4);text-align:left;width:100%">
+                <div style="margin-bottom:1.2rem;position:relative">
+                    <div
+                        style="position:absolute;left:-2.55rem;top:0.2rem;width:12px;height:12px;border-radius:50%;background:#f97316;box-shadow:0 0 12px #f97316">
+                    </div>
+                    <div
+                        style="background:rgba(249,115,22,0.12);border:1px solid rgba(249,115,22,0.3);border-radius:16px;padding:1rem 1.2rem;color:#fff;font-size:1rem;line-height:1.7">
+                        🌹 <b>Tumhari smile</b> — duniya ki sabse khoobsurat cheez hai
+                    </div>
+                </div>
+                <div style="margin-bottom:1.2rem;position:relative">
+                    <div
+                        style="position:absolute;left:-2.55rem;top:0.2rem;width:12px;height:12px;border-radius:50%;background:#f97316;box-shadow:0 0 12px #f97316">
+                    </div>
+                    <div
+                        style="background:rgba(249,115,22,0.12);border:1px solid rgba(249,115,22,0.3);border-radius:16px;padding:1rem 1.2rem;color:#fff;font-size:1rem;line-height:1.7">
+                        🔥 <b>Tumhari hasi</b> — meri har takleef door kar deti hai
+                    </div>
+                </div>
+                <div style="margin-bottom:1.2rem;position:relative">
+                    <div
+                        style="position:absolute;left:-2.55rem;top:0.2rem;width:12px;height:12px;border-radius:50%;background:#f97316;box-shadow:0 0 12px #f97316">
+                    </div>
+                    <div
+                        style="background:rgba(249,115,22,0.12);border:1px solid rgba(249,115,22,0.3);border-radius:16px;padding:1rem 1.2rem;color:#fff;font-size:1rem;line-height:1.7">
+                        💫 <b>Tumhara saath</b> — sab se bada sukoon hai mera
+                    </div>
+                </div>
+                <div style="margin-bottom:1.2rem;position:relative">
+                    <div
+                        style="position:absolute;left:-2.55rem;top:0.2rem;width:12px;height:12px;border-radius:50%;background:#f97316;box-shadow:0 0 12px #f97316">
+                    </div>
+                    <div
+                        style="background:rgba(249,115,22,0.12);border:1px solid rgba(249,115,22,0.3);border-radius:16px;padding:1rem 1.2rem;color:#fff;font-size:1rem;line-height:1.7">
+                        ✨ <b>Tum perfect ho</b> — bilkul mere liye bani ho
+                    </div>
+                </div>
+                <div style="position:relative">
+                    <div
+                        style="position:absolute;left:-2.55rem;top:0.2rem;width:12px;height:12px;border-radius:50%;background:#f97316;box-shadow:0 0 12px #f97316">
+                    </div>
+                    <div
+                        style="background:rgba(249,115,22,0.15);border:1.5px solid rgba(249,115,22,0.5);border-radius:16px;padding:1rem 1.2rem;color:#fff;font-size:1.05rem;line-height:1.7">
+                        ❤️ <b style="color:#fb923c">Tumhare bina zindagi ka koi rang nahi!</b>
+                    </div>
+                </div>
+            </div>
+
+            <div class="a" style="font-size:2.5rem;margin-top:1rem;letter-spacing:8px">
+                <span class="eR">🌹</span><span class="eb">🔥</span><span class="ep">💫</span><span
+                    class="eb">🔥</span><span class="eR">🌹</span>
+            </div>
+        </div>
+
+        <div class="dots"></div>
+        <div class="nav">
+            <button class="nbtn"
+                style="background:linear-gradient(135deg,rgba(249,115,22,0.3),rgba(234,88,12,0.3));border-color:rgba(249,115,22,0.6);box-shadow:0 0 20px rgba(249,115,22,0.3)"
+                onclick="goTo(2)">◀ Peeche</button>
+            <button class="nbtn"
+                style="background:linear-gradient(135deg,rgba(249,115,22,0.3),rgba(234,88,12,0.3));border-color:rgba(249,115,22,0.6);box-shadow:0 0 20px rgba(249,115,22,0.3)"
+                onclick="goTo(4)">Aage Chalo ▶</button>
+        </div>
+    </div>
+
+    <!-- ══ PAGE 4 ══ -->
+    <div class="page" id="p4">
+        <div class="fl-wrap" id="f4"></div>
+        <div class="card">
+            <span class="char anim-beg a">🧑</span>
+            <div class="er a"><span class="ep">❤️</span><span class="es">🙏</span><span class="ep">❤️</span></div>
+            <h1 class="title p4c a">Mere Waade — Dil Se</h1>
+            <p class="sub a">Pakka waada, kabhi nahi tootunga ❤️</p>
+            <div class="box b4 a" style="line-height:2.2;font-size:0.97rem;">
+                🛡️ <b>Tumhe kabhi hurt nahi karunga — KABHI NAHI</b><br>
+                ❤️ Har lamhe tumhari parwah karunga<br>
+                🙏 Jo galti ki — woh dobara kabhi nahi<br>
+                💪 Har mushkil mein tumhare saath hoon<br>
+                ✨ <b>Sirf tum — aur hamesha tum!</b>
+            </div>
+            <p class="msg a">
+                <span class="ep">❤️</span> <b>Tum meri jaan ho</b> — please maaf karo<br>
+                <span class="es">😭</span> <span class="eb">🙏</span> <b>Main tumhare bina adhoora hoon!</b>
+            </p>
+            <div class="er a"><span class="ep">❤️</span><span class="eb">🙏</span><span class="ep">❤️</span></div>
+        </div>
+        <div class="dots"></div>
+        <div class="nav">
+            <button class="nbtn" onclick="goTo(3)">◀ Peeche</button>
+            <button class="nbtn" onclick="goTo(5)">Aage ▶</button>
+        </div>
+    </div>
+
+    <!-- ══ PAGE 5 — FINALE ══ -->
+    <div class="page" id="p5">
+        <div class="stars-wrap" id="stars"></div>
+        <div class="fl-wrap" id="f5"></div>
+
+        <!-- YOUR PHOTO -->
+        <div class="a" style="position:relative;z-index:5;margin-bottom:0.6rem">
+            <div id="photoFrame"
+                style="width:clamp(80px,22vw,120px);height:clamp(80px,22vw,120px);border-radius:50%;overflow:hidden;border:3px solid #fbbf24;box-shadow:0 0 30px rgba(251,191,36,0.6),0 0 60px rgba(251,191,36,0.3);margin:0 auto;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;animation:photoFloat 3s ease-in-out infinite">
+                <img src="Gemini_Generated_Image_7v0vu17v0vu17v0v.png" style="width:100%;height:100%;object-fit:cover">
+            </div>
+        </div>
+
+        <div class="ily-wrap a">
+            <span class="heart-big">💛</span>
+            <span class="ily">I LOVE YOU</span>
+            <span class="sorry-big">I AM SORRY 🙏</span>
+            <span class="heart-big">💛</span>
+        </div>
+
+        <div class="card a" style="margin-top:0.8rem;">
+            <div class="er"><span class="ep">✨</span><span class="eR">🌟</span><span class="ep">✨</span><span
+                    class="eR">⭐</span><span class="ep">✨</span></div>
+            <h1 class="title p5c" style="font-size:clamp(1.4rem,4vw,2.2rem);">Bas Tum — Sirf Tum ✨</h1>
+            <p class="msg" style="margin-top:0.5rem;">
+                <span class="ep">💛</span> Tum meri subah, meri shaam ho<br>
+                <span class="eR">⭐</span> Tum mera sapna, meri jaan ho<br>
+                <span class="eb">🌟</span> <b>Please wapas ao — I need you!</b>
+            </p>
+            <div class="er"><span class="ep">💛</span><span class="eR">🌟</span><span class="ep">✨</span><span
+                    class="eR">⭐</span><span class="ep">💛</span></div>
+        </div>
+
+        <div class="dots"></div>
+        <div class="nav">
+            <button class="nbtn" style="border-color:rgba(251,191,36,0.6);box-shadow:0 0 15px rgba(251,191,36,0.3)"
+                onclick="goTo(4)">◀ Peeche</button>
+            <button class="nbtn hide">Aage ▶</button>
+        </div>
+    </div>
+
+    <script>
+        // ─── PARTICLES CANVAS ───
+        const cv = document.getElementById('canvas'), ctx = cv.getContext('2d');
+        cv.width = window.innerWidth; cv.height = window.innerHeight;
+        window.addEventListener('resize', () => { cv.width = window.innerWidth; cv.height = window.innerHeight; });
+        const pColors = ['#d946ef', '#38bdf8', '#4ade80', '#f87171', '#fbbf24'];
+        let particles = [];
+        for (let i = 0; i < 60; i++) {
+            particles.push({
+                x: Math.random() * cv.width, y: Math.random() * cv.height,
+                r: Math.random() * 2.5 + 0.5,
+                c: pColors[Math.floor(Math.random() * pColors.length)],
+                vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+                o: Math.random() * 0.5 + 0.2
+            });
+        }
+        function drawParticles() {
+            ctx.clearRect(0, 0, cv.width, cv.height);
+            particles.forEach(p => {
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = p.c; ctx.globalAlpha = p.o; ctx.fill();
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0 || p.x > cv.width) p.vx *= -1;
+                if (p.y < 0 || p.y > cv.height) p.vy *= -1;
+            });
+            ctx.globalAlpha = 1;
+            requestAnimationFrame(drawParticles);
+        }
+        drawParticles();
+
+        // ─── FLOATERS ───
+        const fData = [
+            ['😭', '💔', '🙏', '💜', '😢', '💜', '🙏'],
+            ['💙', '🌊', '😔', '💙', '🌊', '💙', '😔'],
+            ['🌹', '🔥', '💫', '🌹', '🔥', '💫', '🌹'],
+            ['❤️', '🙏', '💪', '❤️', '😭', '🙏', '❤️'],
+            ['✨', '⭐', '💛', '🌟', '💫', '✨', '💛']
+        ];
+        for (let p = 1; p <= 5; p++) {
+            const c = document.getElementById('f' + p);
+            fData[p - 1].forEach((em, i) => {
+                const d = document.createElement('div'); d.className = 'fl'; d.textContent = em;
+                d.style.cssText = `left:${5 + i * 13}%;font-size:${1.4 + Math.random() * 0.8}rem;animation-duration:${5 + Math.random() * 5}s;animation-delay:${Math.random() * 5}s;`;
+                c.appendChild(d);
+            });
+        }
+
+        // ─── STAR RAIN PAGE 5 ───
+        const sw = document.getElementById('stars');
+        ['✨', '⭐', '💛', '🌟', '💫', '⭐'].forEach(s => {
+            for (let j = 0; j < 5; j++) {
+                const el = document.createElement('div'); el.className = 'st'; el.textContent = s;
+                el.style.cssText = `left:${Math.random() * 100}%;font-size:${0.9 + Math.random() * 1.4}rem;animation-duration:${3 + Math.random() * 5}s;animation-delay:${Math.random() * 5}s;`;
+                sw.appendChild(el);
+            }
+        });
+
+        // ─── DOTS ───
+        function buildDots() {
+            document.querySelectorAll('.dots').forEach((dc, pi) => {
+                dc.innerHTML = '';
+                for (let i = 1; i <= 5; i++) {
+                    const d = document.createElement('div');
+                    d.className = 'dot' + (i === pi + 1 ? '  on' : '');
+                    d.onclick = () => goTo(i); dc.appendChild(d);
+                }
+            });
+        }
+        buildDots();
+
+        // ─── NAV ───
+        let cur = 1;
+        function goTo(n) {
+            if (n < 1 || n > 5 || n === cur) return;
+            const prev = document.getElementById('p' + cur);
+            prev.classList.remove('active');
+            cur = n;
+            const pg = document.getElementById('p' + cur);
+            pg.classList.add('active');
+            // refresh animations
+            pg.querySelectorAll('.a').forEach(el => {
+                el.style.animation = 'none';
+                requestAnimationFrame(() => requestAnimationFrame(() => { el.style.animation = ''; }));
+            });
+            // update dots
+            document.querySelectorAll('.dots').forEach((dc, pi) => {
+                dc.querySelectorAll('.dot').forEach((d, i) => {
+                    d.className = 'dot' + (i === cur - 1 ? ' on' : '');
+                });
+            });
+        }
+
+        // ─── MUSIC ───
+        const bgm = document.getElementById('bgm'), mb = document.getElementById('mbtn');
+        let playing = false;
+        function toggleMusic() {
+            if (playing) { bgm.pause(); mb.textContent = '🔇'; playing = false; }
+            else { bgm.play().catch(() => { }); mb.textContent = '🎵'; playing = true; }
+        }
+        document.body.addEventListener('click', function once() {
+            if (!playing) { bgm.play().catch(() => { }); mb.textContent = '🎵'; playing = true; }
+            document.body.removeEventListener('click', once);
+        }, { once: true });
+    </script>
+</body>
+
+</html>
